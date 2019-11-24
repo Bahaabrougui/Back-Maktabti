@@ -63,8 +63,6 @@ public class Book {
     @JoinColumn(name = "user")
     private User user;
 
-    @OneToMany(mappedBy = "book")
-    private List<UserBookRequest> requests;
 
     public Long getId() {
         return id;
@@ -154,11 +152,5 @@ public class Book {
         this.user = user;
     }
 
-    public List<UserBookRequest> getRequests() {
-        return requests;
-    }
 
-    public void setRequests(List<UserBookRequest> requests) {
-        this.requests = requests;
-    }
 }
