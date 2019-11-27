@@ -25,4 +25,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return UserPrinciple.build(user);
     }
+
+    // This method is used by JWTAuthenticationFilter
+    @Transactional
+    public UserDetails loadUserById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new UsernameNotFoundException("User not found with id : " + id)
+        );
+
+        return UserPrinciple.build(user);
+    }
 }

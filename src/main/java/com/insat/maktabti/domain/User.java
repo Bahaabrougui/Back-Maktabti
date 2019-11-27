@@ -42,11 +42,11 @@ public class User implements Serializable {
     @Size(min = 3, max = 50)
     private String username;
 
-    @NotBlank
+
     @DateTimeFormat
     private String birthDate;
 
-    @NotBlank
+
     @Size(max = 50)
     private String adress;
 
