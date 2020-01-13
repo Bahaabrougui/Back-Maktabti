@@ -4,11 +4,15 @@ import com.insat.maktabti.DAO.BookDao;
 import com.insat.maktabti.DAO.UserDao;
 import com.insat.maktabti.domain.Book;
 import com.insat.maktabti.domain.User;
+import com.insat.maktabti.domain.request.ReqCreateBook;
 import com.insat.maktabti.exception.BadRequestException;
 import com.insat.maktabti.repositories.UserRepository;
+import com.insat.maktabti.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.security.Principal;
 
 @RestController
@@ -18,6 +22,8 @@ public class BookController {
     private BookDao bookDao;
     @Autowired
     private UserRepository userDao;
+    @Autowired
+    private FileService fileService;
 
     @GetMapping(value = "/Books")
     public Iterable<Book> getAllBooks() {
@@ -41,10 +47,21 @@ public class BookController {
     }
 
     @PostMapping(value = "/Book")
-    public Book createBook(@RequestBody Book book, Principal principal) {
+    @CrossOrigin
+    public Book createBook(@ModelAttribute ReqCreateBook reqBook, Principal principal) throws IOException {
         User currentUser = userDao.findByUsername(principal.getName()).orElseThrow(() -> new RuntimeException("User not found"));
-        book.setUser(currentUser);
-        return bookDao.save(book);
+        Book newBook = new Book();
+        newBook.setName(reqBook.getName());
+        newBook.setAuthor(reqBook.getAuthor());
+        newBook.setGenre(reqBook.getGenre());
+        newBook.setPrice(reqBook.getPrice());
+        newBook.setPublisher(reqBook.getPublisher());
+        newBook.setUser(currentUser);
+        newBook.setDescription(reqBook.getDescription());
+        Path path = fileService.storeFile(reqBook.getImage());
+        newBook.setPhotoPath(path.toString());
+        return bookDao.save(newBook);
+
     }
 
 }

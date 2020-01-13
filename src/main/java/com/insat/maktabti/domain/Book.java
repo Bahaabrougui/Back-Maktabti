@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 
@@ -32,18 +33,24 @@ public class Book {
 
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private float price;
+    @Size(max = 50)
+    private String photoPath;
 
-    @NotBlank
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private String releaseDate;
+    //@DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date releaseDate;
 
-    @NotBlank
+
     @Size(max = 50)
     private String author;
 
-    @NotBlank
+
     @Size(max = 50)
     private String publisher;
+
+    @Size(max = 50)
+    private String description;
+
+
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -61,6 +68,22 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "user")
     private User user;
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 
     public Long getId() {
@@ -95,11 +118,11 @@ public class Book {
         this.price = price;
     }
 
-    public String getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -149,6 +172,10 @@ public class Book {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Book() {
+
     }
 
 
