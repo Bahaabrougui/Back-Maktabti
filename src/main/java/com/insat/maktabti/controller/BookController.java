@@ -1,15 +1,23 @@
 package com.insat.maktabti.controller;
 
 import com.insat.maktabti.DAO.BookDao;
+import com.insat.maktabti.DAO.UserDao;
 import com.insat.maktabti.domain.Book;
+import com.insat.maktabti.domain.User;
+import com.insat.maktabti.exception.BadRequestException;
+import com.insat.maktabti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 public class BookController {
 
     @Autowired
     private BookDao bookDao;
+    @Autowired
+    private UserRepository userDao;
 
     @GetMapping(value = "/Books")
     public Iterable<Book> getAllBooks() {
@@ -33,9 +41,10 @@ public class BookController {
     }
 
     @PostMapping(value = "/Book")
-    public Book createBook(@RequestBody Book book) {
-        Book bookAdded = bookDao.save(book);
-        return bookAdded;
+    public Book createBook(@RequestBody Book book, Principal principal) {
+        User currentUser = userDao.findByUsername(principal.getName()).orElseThrow(() -> new RuntimeException("User not found"));
+        book.setUser(currentUser);
+        return bookDao.save(book);
     }
 
 }

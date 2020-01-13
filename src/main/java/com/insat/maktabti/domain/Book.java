@@ -30,7 +30,6 @@ public class Book {
     @Size(min = 3, max = 50)
     private String genre;
 
-    @NotNull
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private float price;
 
