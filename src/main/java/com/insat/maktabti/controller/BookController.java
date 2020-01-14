@@ -35,10 +35,10 @@ public class BookController {
     public Page<Book> getAllBooks(Pageable pageable, String genre) {
         if (genre != null){
            System.out.print(pageable.toString());
-            return  bookDao.findAllByGenre(genre, pageable);
+            return  bookDao.findAllByGenreAndType(genre,Type.SELL.name(), pageable);
            // return new PageImpl<>(books, pageable, books.size());
         }
-       return bookDao.findAll(pageable);
+       return bookDao.findAllByType(Type.SELL.name(), pageable);
 
     }
 
@@ -46,7 +46,14 @@ public class BookController {
     @CrossOrigin
     public Page<Book> getMyBooks(Pageable pageable,Principal principal) {
         User currentUser = userDao.findByUsername(principal.getName()).orElseThrow(() -> new RuntimeException("User not found"));
-        return bookDao.findAllByUserId(currentUser.getId(), pageable);
+        return bookDao.findAllByUserIdAndType(currentUser.getId(), Type.EXCHANGE.name(), pageable);
+
+    }
+    @GetMapping(value = "/exchange-books")
+    @CrossOrigin
+    public Page<Book> geOthersBooks(Pageable pageable,Principal principal) {
+        User currentUser = userDao.findByUsername(principal.getName()).orElseThrow(() -> new RuntimeException("User not found"));
+        return bookDao.findAllByTypeAndUserIdNot(Type.EXCHANGE.name(),currentUser.getId(), pageable);
 
     }
 
