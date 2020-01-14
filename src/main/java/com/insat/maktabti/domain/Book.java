@@ -33,11 +33,11 @@ public class Book {
 
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private float price;
-    @Size(max = 50)
+    @Size(max = 250)
     private String photoPath;
 
     //@DateTimeFormat(pattern = "dd/MM/yyyy")
-    private Date releaseDate;
+    private String releaseDate;
 
 
     @Size(max = 50)
@@ -118,13 +118,7 @@ public class Book {
         this.price = price;
     }
 
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
 
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
 
     public String getAuthor() {
         return author;
