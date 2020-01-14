@@ -21,11 +21,14 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @NotBlank
     @Size(min = 3, max = 50)
     private String name;
+
+    @Size(min = 3, max = 50)
+    private String type;
 
     @NotBlank
     @Size(min = 3, max = 50)
@@ -50,7 +53,13 @@ public class Book {
     @Size(max = 50)
     private String description;
 
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -86,12 +95,20 @@ public class Book {
     }
 
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public String getName() {

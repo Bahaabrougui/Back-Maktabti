@@ -12,5 +12,6 @@ public interface BookDao extends JpaRepository<Book,Integer> {
     Book findById(int id);
     Page<Book> findAll(Pageable pageable);
     long count();
-    List<Book> findAllByGenre(String genre, Pageable pageable);
+    Page<Book> findAllByGenre(String genre, Pageable pageable);
+    Page<Book> findAllByUserId(Long UserId, Pageable pageable);
 }
