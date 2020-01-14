@@ -3,14 +3,11 @@ package com.insat.maktabti.domain;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 
@@ -172,10 +169,6 @@ public class Book {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Book() {
