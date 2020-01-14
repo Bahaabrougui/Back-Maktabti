@@ -12,7 +12,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.nio.file.Path;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "book")
@@ -77,6 +79,21 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "user")
     private User user;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "exchange_requests",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "req_id"))
+    private Set<Book> requests = new HashSet<>();
+
+
+    public Set<Book> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(Set<Book> requests) {
+        this.requests = requests;
+    }
 
     public String getPhotoPath() {
         return photoPath;
