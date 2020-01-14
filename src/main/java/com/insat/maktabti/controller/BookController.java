@@ -1,20 +1,20 @@
 package com.insat.maktabti.controller;
 
 import com.insat.maktabti.DAO.BookDao;
-import com.insat.maktabti.DAO.UserDao;
 import com.insat.maktabti.domain.Book;
 import com.insat.maktabti.domain.User;
 import com.insat.maktabti.domain.request.ReqCreateBook;
-import com.insat.maktabti.exception.BadRequestException;
 import com.insat.maktabti.repositories.UserRepository;
 import com.insat.maktabti.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.security.Principal;
 import java.util.List;
 
@@ -30,13 +30,12 @@ public class BookController {
 
     @GetMapping(value = "/book")
     @CrossOrigin
-    public List<Book> getAllBooks(Pageable pageable, String genre) {
+    public Page<Book> getAllBooks(Pageable pageable, String genre) {
         if (genre != null){
-
-            return bookDao.findAllByGenre(genre, pageable);
+            List<Book> books = bookDao.findAllByGenre(genre);
+            return new PageImpl<>(books, pageable, books.size());
         }
-       return bookDao.findAll(pageable).getContent();
-
+        return bookDao.findAll(pageable);
     }
 
     @GetMapping(value = "/book/{id}")
@@ -56,7 +55,7 @@ public class BookController {
 
     @PostMapping(value = "/book")
     @CrossOrigin
-    public Book createBook(@ModelAttribute ReqCreateBook reqBook, Principal principal) throws IOException {
+    public ResponseEntity<Book> createBook(@ModelAttribute ReqCreateBook reqBook, Principal principal) throws IOException {
         User currentUser = userDao.findByUsername(principal.getName()).orElseThrow(() -> new RuntimeException("User not found"));
         Book newBook = new Book();
         newBook.setName(reqBook.getName());
@@ -69,7 +68,14 @@ public class BookController {
         long lenght = bookDao.count();
         String path = fileService.storeFile(reqBook.getImage(), "BK", lenght);
         newBook.setPhotoPath(path);
-        return bookDao.save(newBook);
+        Book book = bookDao.save(newBook);
+        if (book != null) {
+            return new ResponseEntity<>(book, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+
+
+        }
 
     }
 
