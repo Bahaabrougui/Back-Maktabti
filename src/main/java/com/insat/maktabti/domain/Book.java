@@ -3,12 +3,10 @@ package com.insat.maktabti.domain;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
@@ -30,21 +28,26 @@ public class Book {
     @Size(min = 3, max = 50)
     private String genre;
 
-    @NotNull
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private float price;
+    @Size(max = 250)
+    private String photoPath;
 
-    @NotBlank
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    //@DateTimeFormat(pattern = "dd/MM/yyyy")
     private String releaseDate;
 
-    @NotBlank
+
     @Size(max = 50)
     private String author;
 
-    @NotBlank
+
     @Size(max = 50)
     private String publisher;
+
+    @Size(max = 50)
+    private String description;
+
+
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -62,6 +65,22 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "user")
     private User user;
+
+    public Book() {
+
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 
 
     public Long getId() {
@@ -96,13 +115,7 @@ public class Book {
         this.price = price;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
-    }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
 
     public String getAuthor() {
         return author;
@@ -150,6 +163,10 @@ public class Book {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 
