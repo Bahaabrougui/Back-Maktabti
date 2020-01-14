@@ -30,8 +30,12 @@ public class BookController {
 
     @GetMapping(value = "/book")
     @CrossOrigin
-    public Page<Book> getAllBooks(Pageable pageable) {
-       return bookDao.findAll(pageable);
+    public List<Book> getAllBooks(Pageable pageable, String genre) {
+        if (genre != null){
+
+            return bookDao.findAllByGenre(genre, pageable);
+        }
+       return bookDao.findAll(pageable).getContent();
 
     }
 
