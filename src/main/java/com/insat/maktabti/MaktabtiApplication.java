@@ -10,17 +10,18 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 @EntityScan(basePackageClasses = {
-		MaktabtiApplication.class,
-		Jsr310JpaConverters.class
+        MaktabtiApplication.class,
+        Jsr310JpaConverters.class
 })
 @EnableJpaAuditing
 public class MaktabtiApplication {
-	void init() {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-	}
+    void init() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(MaktabtiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MaktabtiApplication.class, args);
+    }
+
 
 }
