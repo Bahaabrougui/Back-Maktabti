@@ -52,6 +52,14 @@ public class BookController {
         return bookDao.findAllByUserIdAndType(currentUser.getId(), Type.EXCHANGE.name(), pageable);
 
     }
+    @GetMapping(value = "/book-in-progress")
+    @CrossOrigin
+    public Page<Book> getInProgressBooks(Pageable pageable,Principal principal) {
+        User currentUser = userDao.findByUsername(principal.getName()).orElseThrow(() -> new RuntimeException("User not found"));
+        return bookDao.findAllByUserIdAndType(currentUser.getId(), Type.INPROGRESS.name(), pageable);
+
+    }
+
     @GetMapping(value = "/exchange-books")
     @CrossOrigin
     public Page<Book> geOthersBooks(Pageable pageable,Principal principal) {
@@ -64,48 +72,49 @@ public class BookController {
     @PostMapping(value = "/send-request")
     @CrossOrigin
     public Book sendRequest(@RequestBody ReqExchangeBook reqExchangeBook, Principal principal) {
-      Book exchangeWithBook = bookDao.findById(reqExchangeBook.getExchangeWith());
-     /* if (!exchangeWithBook.getUser().getName().equals(principal.getName())){
+      Book reqBook = bookDao.findById(reqExchangeBook.getExchangeWith());
+     /* if (!reqBook.getUser().getName().equals(principal.getName())){
           throw new RuntimeException("You don't own the exchanged book");
       }*/
       Book requestedBook = bookDao.findById(reqExchangeBook.getRequestBook());
-      requestedBook.getRequests().add(exchangeWithBook);
+      requestedBook.getRequests().add(reqBook);
       bookDao.save(requestedBook);
-      return exchangeWithBook;
+      return reqBook;
     }
 
     @PostMapping(value = "/accept-request")
     @CrossOrigin
-    public Book acceptRequest(@RequestBody ReqExchangeBook reqExchangeBook, Principal principal){
+    public void acceptRequest(@RequestBody ReqExchangeBook reqExchangeBook, Principal principal){
 
         //set type to INPROGRESS
-        Book exchangeWithBook = bookDao.findById(reqExchangeBook.getExchangeWith());
+        Book reqBook = bookDao.findById(reqExchangeBook.getExchangeWith());
         //check that you own the book
         Book requestedBook = bookDao.findById(reqExchangeBook.getRequestBook());
-        exchangeWithBook.setType(Type.INPROGRESS.name());
+        reqBook.setType(Type.INPROGRESS.name());
+        reqBook.setExchangeWith(requestedBook.getId());
         requestedBook.setType(Type.INPROGRESS.name());
-        bookDao.save(exchangeWithBook);
+        requestedBook.setExchangeWith(reqBook.getId());
+        bookDao.save(reqBook);
         bookDao.save(requestedBook);
-        return exchangeWithBook;
+
         //
     }
 
-    @PostMapping(value = "/confirm-request")
+    @GetMapping(value = "/confirm-request/{id}")
     @CrossOrigin
-    public Book confirmRequest(@RequestBody ReqExchangeBook reqExchangeBook, Principal principal){
-
+    public Book confirmRequest(@PathVariable int id, Principal principal){
+System.out.print("eee" + id);
         //set type to confirm
-        Book exchangeWithBook = bookDao.findById(reqExchangeBook.getExchangeWith());
+        Book reqBook = bookDao.findById(id);
         //check that you own the book
-        Book requestedBook = bookDao.findById(reqExchangeBook.getRequestBook());
-        exchangeWithBook.setType(Type.CONFIRM.name());
-        exchangeWithBook.setUser(requestedBook.getUser());
-        requestedBook.setType(Type.CONFIRM.name());
-        exchangeWithBook.setUser(exchangeWithBook.getUser());
-        bookDao.save(exchangeWithBook);
-        bookDao.save(requestedBook);
-        return exchangeWithBook;
-        //
+        Book requestedBook =  bookDao.findById(reqBook.getExchangeWith());
+        reqBook.setType(Type.CONFIRM.name());
+        reqBook.setUser(requestedBook.getUser());
+
+       return bookDao.save(reqBook);
+
+
+
     }
 
     @GetMapping(value = "/book/{id}")

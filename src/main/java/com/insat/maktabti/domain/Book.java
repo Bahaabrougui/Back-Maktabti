@@ -87,6 +87,17 @@ public class Book {
     private Set<Book> requests = new HashSet<>();
 
 
+
+    private int exchangeWith;
+
+    public int getExchangeWith() {
+        return exchangeWith;
+    }
+
+    public void setExchangeWith(int exchangeWith) {
+        this.exchangeWith = exchangeWith;
+    }
+
     public Set<Book> getRequests() {
         return requests;
     }
