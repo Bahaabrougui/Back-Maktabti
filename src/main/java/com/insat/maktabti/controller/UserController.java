@@ -66,8 +66,8 @@ public class UserController {
             currentUser.setImageUrl(path);
         }
 
-        userDao.save(currentUser);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        User result = userDao.save(currentUser);
+        return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
 
