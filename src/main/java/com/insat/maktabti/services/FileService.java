@@ -14,12 +14,21 @@ public class FileService {
 
     private static final String FILE_DIRECTORY = "E:\\GL4\\angular\\front-maktabti\\src\\assets\\images\\books\\";
 
-    public String storeFile(MultipartFile file, String prefix, long id) throws IOException {
-        String fileName = getBaseName(file.getOriginalFilename()) + prefix + id + getExtension(file.getOriginalFilename());
-        Path filePath = Paths.get(FILE_DIRECTORY  +  fileName);
+    private static final String USER_FILE_DIRECTORY = "C:\\Users\\User\\WebstormProjects\\front-maktabtii\\src\\assets\\images\\users\\";
 
-        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        return fileName;
+
+    public String storeFile(MultipartFile file, String prefix, long id, String type) throws IOException {
+        String fileName = getBaseName(file.getOriginalFilename()) + prefix + id + getExtension(file.getOriginalFilename());
+        if (type.equals("book")) {
+            Path filePath = Paths.get(FILE_DIRECTORY + fileName);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            return fileName;
+        } else {
+            Path filePath = Paths.get(USER_FILE_DIRECTORY + fileName);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            return fileName;
+        }
+
 
     }
     public static String getBaseName(String fileName) {

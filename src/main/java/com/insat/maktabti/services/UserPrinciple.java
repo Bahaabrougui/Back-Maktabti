@@ -54,7 +54,7 @@ public class UserPrinciple implements UserDetails {
                 user.getName(),
                 user.getUsername(),
                 user.getBirthDate(),
-                user.getAdress(),
+                user.getAddress(),
                 user.getEmail(),
                 user.getPassword(),
                 authorities

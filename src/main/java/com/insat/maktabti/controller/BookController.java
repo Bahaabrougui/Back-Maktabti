@@ -1,26 +1,20 @@
 package com.insat.maktabti.controller;
 
 import com.insat.maktabti.DAO.BookDao;
-import com.insat.maktabti.DAO.UserDao;
 import com.insat.maktabti.domain.Book;
-import com.insat.maktabti.domain.Chapter;
 import com.insat.maktabti.domain.User;
 import com.insat.maktabti.domain.enumerations.Type;
 import com.insat.maktabti.domain.request.ReqCreateBook;
 import com.insat.maktabti.domain.request.ReqExchangeBook;
-import com.insat.maktabti.exception.BadRequestException;
 import com.insat.maktabti.repositories.UserRepository;
 import com.insat.maktabti.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.security.Principal;
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -154,7 +148,7 @@ System.out.print("eee" + id);
         newBook.setType(Type.SELL.name());
         newBook.setDescription(reqBook.getDescription());
         long length = bookDao.count();
-        String path = fileService.storeFile(reqBook.getImage(), "BK", length);
+        String path = fileService.storeFile(reqBook.getImage(), "BK", length, "book");
         newBook.setPhotoPath(path);
         return bookDao.save(newBook);
     }
@@ -172,7 +166,7 @@ System.out.print("eee" + id);
         newBook.setType(Type.EXCHANGE.name());
         newBook.setDescription(reqBook.getDescription());
         long length = bookDao.count() + 1;
-        String path = fileService.storeFile(reqBook.getImage(), "BK", length);
+        String path = fileService.storeFile(reqBook.getImage(), "BK", length, "book");
         newBook.setPhotoPath(path);
         return bookDao.save(newBook);
 

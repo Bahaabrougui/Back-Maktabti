@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
         user.setName(userDTO.getName());
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
-        user.setAdress(userDTO.getAdress());
+        user.setAddress(userDTO.getAdress());
         user.setBirthDate(userDTO.getBirthDate());
         user.setPassword(encoder.encode(userDTO.getPassword()));
 
