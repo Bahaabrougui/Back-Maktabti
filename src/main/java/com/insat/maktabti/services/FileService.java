@@ -12,7 +12,7 @@ import java.nio.file.StandardCopyOption;
 @Component
 public class FileService {
 
-    private static final String FILE_DIRECTORY = "C:\\Users\\User\\WebstormProjects\\front-maktabtii\\src\\assets\\images\\books";
+    private static final String FILE_DIRECTORY = "E:\\GL4\\angular\\front-maktabti\\src\\assets\\images\\books\\";
 
     public String storeFile(MultipartFile file, String prefix, long id) throws IOException {
         String fileName = getBaseName(file.getOriginalFilename()) + prefix + id + getExtension(file.getOriginalFilename());

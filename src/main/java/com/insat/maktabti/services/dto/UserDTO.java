@@ -50,6 +50,14 @@ public class UserDTO {
         // Empty constructor needed for Jackson.
     }
 
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
     public UserDTO(User user) {
         this.id = user.getId();
         this.name = user.getName();
@@ -88,6 +96,9 @@ public class UserDTO {
         this.roles = roles;
     }
 
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     @Override
     public String toString() {
@@ -132,11 +143,4 @@ public class UserDTO {
         this.birthDate = birthDate;
     }
 
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-}
+   }

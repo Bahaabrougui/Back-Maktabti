@@ -16,7 +16,7 @@ public class UserController {
         return users;
     }
 
-    @GetMapping(value = "/User/{id}")
+    @GetMapping(value = "/user/{id}")
     public User getOneUser(@PathVariable int id) {
         return userDao.findById(id);
     }
