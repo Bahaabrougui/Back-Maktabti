@@ -78,18 +78,11 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_friends",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id"))
-    private Set<User> friends = new HashSet<>();
+
 
 
     @OneToMany(mappedBy = "user")
     private List<Book> books;
-
-    @OneToMany(mappedBy = "user")
-    private List<Chapter> chapters;
 
     @OneToMany(mappedBy = "user")
     private List<Review> reviews;

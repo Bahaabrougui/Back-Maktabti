@@ -3,28 +3,19 @@ package com.insat.maktabti.domain;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table(name = "chapter")
+@Table(name = "story")
 @EntityListeners(AuditingEntityListener.class)
-public class Chapter {
-
+public class Story {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Size(min = 3, max = 50)
-    private String name;
-
-    private String content;
-
-    private int numero;
+    private int id;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -35,32 +26,28 @@ public class Chapter {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
+    @NotBlank
+    @Size(min = 3, max = 50)
+    private String name;
+
+
+    private String status;
+
+
+    @Size(min = 3, max = 50)
+    private String genre;
+
+    private String description;
 
     @ManyToOne
-    @JoinColumn(name = "story_id")
-    private Story story;
+    @JoinColumn(name = "owner")
+    private User owner;
 
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-
-    public Story getStory() {
-        return story;
-    }
-
-    public void setStory(Story story) {
-        this.story = story;
-    }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -72,12 +59,12 @@ public class Chapter {
         this.name = name;
     }
 
-    public String getContent() {
-        return content;
+    public String getStatus() {
+        return status;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getCreatedAt() {
@@ -96,5 +83,27 @@ public class Chapter {
         this.updatedAt = updatedAt;
     }
 
-}
+    public String getGenre() {
+        return genre;
+    }
 
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+}

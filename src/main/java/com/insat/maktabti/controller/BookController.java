@@ -103,7 +103,7 @@ public class BookController {
     @GetMapping(value = "/confirm-request/{id}")
     @CrossOrigin
     public Book confirmRequest(@PathVariable int id, Principal principal){
-System.out.print("eee" + id);
+
         //set type to confirm
         Book reqBook = bookDao.findById(id);
         //check that you own the book
@@ -153,7 +153,7 @@ System.out.print("eee" + id);
         newBook.setUser(currentUser);
         newBook.setType(Type.SELL.name());
         newBook.setDescription(reqBook.getDescription());
-        long length = bookDao.count();
+        long length = bookDao.count() + 1;
         String path = fileService.storeFile(reqBook.getImage(), "BK", length);
         newBook.setPhotoPath(path);
         return bookDao.save(newBook);
