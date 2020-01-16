@@ -52,7 +52,7 @@ public class UserController {
         currentUser.setEmail(user.getEmail());
         currentUser.setUsername(user.getEmail());
         if (!user.getPassword().isEmpty()) {
-            currentUser.setPassword(encoder.encode(user.getPassword()));
+            currentUser.setPassword(user.getPassword());
         }
         currentUser.setAddress(user.getAddress());
         currentUser.setAboutMe(user.getAboutMe());
