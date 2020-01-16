@@ -14,7 +14,7 @@ public class FileService {
 
     private static final String FILE_DIRECTORY = "E:\\GL4\\angular\\front-maktabti\\src\\assets\\images\\books\\";
 
-    private static final String USER_FILE_DIRECTORY = "C:\\Users\\User\\WebstormProjects\\front-maktabtii\\src\\assets\\images\\users\\";
+    private static final String USER_FILE_DIRECTORY = "E:\\GL4\\angular\\front-maktabti\\src\\assets\\images\\users\\";
 
 
     public String storeFile(MultipartFile file, String prefix, long id, String type) throws IOException {
