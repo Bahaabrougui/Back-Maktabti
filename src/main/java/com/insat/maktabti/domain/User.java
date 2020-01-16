@@ -43,12 +43,26 @@ public class User implements Serializable {
     private String username;
 
 
+
     @DateTimeFormat
     private String birthDate;
 
 
     @Size(max = 50)
-    private String adress;
+    private String address;
+
+    private String city;
+
+    private String country;
+
+    @Size(max = 20)
+    @Column(name = "postal_code")
+    private String postalCode;
+
+
+    @Size(max = 150)
+    @Column(name = "about_me")
+    private String aboutMe;
 
     @NotBlank
     @Size(max = 50)
@@ -196,12 +210,44 @@ public class User implements Serializable {
         this.birthDate = birthDate;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
 

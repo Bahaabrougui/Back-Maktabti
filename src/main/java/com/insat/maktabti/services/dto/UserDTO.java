@@ -63,7 +63,7 @@ public class UserDTO {
         this.name = user.getName();
         this.username = user.getUsername();
         this.birthDate = user.getBirthDate();
-        this.adress = user.getAdress();
+        this.adress = user.getAddress();
         this.email = user.getEmail();
         this.roles = user.getRoles();
         this.password = user.getPassword();
