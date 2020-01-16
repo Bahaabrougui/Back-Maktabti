@@ -37,7 +37,8 @@ public class StoryController {
         return storyDao.findAllByStatusAndOwnerIdNot(StoryStatus.INPROGRESS.name(),currentUser.getId(), pageable);
     }
 
-    @GetMapping(value = "/Story/{id}")
+    @GetMapping(value = "/story/{id}")
+    @CrossOrigin
     public Story getOneStory(@PathVariable int id) {
         return storyDao.findById(id);
     }
